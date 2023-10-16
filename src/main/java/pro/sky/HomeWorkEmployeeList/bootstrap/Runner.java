@@ -18,7 +18,10 @@ public class Runner implements CommandLineRunner {
                 new Employee("Людмила", "Иванова"),
                 new Employee("Игорь", "Криштоп"),
                 new Employee("Павел", "Носков"),
-                new Employee("Иван", "Могиш")
+                new Employee("Иван", "Могиш"),
+                new Employee("Роберт", "Блинов"),
+                new Employee("Сергей", "Арбузов"),
+                new Employee("Павел", "Аленчев")
         );
 
 

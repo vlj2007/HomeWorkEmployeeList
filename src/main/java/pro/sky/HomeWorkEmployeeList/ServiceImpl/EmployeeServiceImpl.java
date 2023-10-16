@@ -8,44 +8,51 @@ import pro.sky.HomeWorkEmployeeList.Interface.EmployeeInterface;
 import pro.sky.HomeWorkEmployeeList.Model.Employee;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeInterface {
 
-    List<Employee> employeesList = new ArrayList<>();
+    public final int NUMBER_OF_EMPLOYEES = 10;
 
+    private final List<Employee> employeesList;
 
-    @Override
-    public String employeeAdd(String firstName, String lastName) {
-        Employee PersonAnother = new Employee(firstName, lastName);
-        if(employeesList.size() > 10) {
-            throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников");
-        }
-        for(int i = 0; i < employeesList.size(); i++){
-            if(employeesList.get(i).equals(PersonAnother)){
-                throw new EmployeeAlreadyAddedException("в коллекции уже есть такой сотрудник");
-            }
-        }
-        employeesList.add(PersonAnother);
-        return "Сотрудник " + employeesList.toString() + " добавлен";
+    public EmployeeServiceImpl() {
+        this.employeesList = new ArrayList<>();
     }
 
     @Override
-    public String employeeRemove(String firstName, String lastName) {
-        Employee PersonAnother = new Employee(firstName, lastName);
-        if(employeesList.contains(PersonAnother)){
-            employeesList.remove(PersonAnother);
+    public String add(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
+
+        if(employeesList.size() > NUMBER_OF_EMPLOYEES) {
+            throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников");
+        }
+
+        if(employeesList.contains(employee)) {
+            throw new EmployeeNotFoundException("уже есть такой сотрудник");
+        }
+        employeesList.add(employee);
+        return employeesList.toString();
+    }
+
+    @Override
+    public String remove(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
+        if(employeesList.contains(employee)){
+            employeesList.remove(employee);
         }
         return "Пользователь удален";
     }
 
     @Override
-    public String employeeFind(String firstName, String lastName) {
-        Employee PersonAnother = new Employee(firstName, lastName);
+    public String find(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
         int items = 0;
         for (int i = 0; i < employeesList.size(); i++) {
-            if (employeesList.get(i).equals(PersonAnother)) {
+            if (employeesList.get(i).equals(employee)) {
                 items = i;
             } else {
                 throw new EmployeeNotFoundException("Пользователь не найден");
@@ -53,6 +60,15 @@ public class EmployeeServiceImpl implements EmployeeInterface {
         }
         return employeesList.get(items).toString();
     }
+
+
+    @Override
+    public Collection<Employee> findAll(){
+        return Collections.unmodifiableList(employeesList);
+    }
+
+
+
 
 
 
