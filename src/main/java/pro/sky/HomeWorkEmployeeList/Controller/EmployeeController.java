@@ -1,43 +1,46 @@
 package pro.sky.HomeWorkEmployeeList.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.HomeWorkEmployeeList.Interface.EmployeeInterface;
-import pro.sky.HomeWorkEmployeeList.ServiceImpl.EmployeeServiceImpl;
+import pro.sky.HomeWorkEmployeeList.Model.Employee;
+
+import java.util.Collection;
 
 @RestController
+@RequestMapping("/employee")
 public class EmployeeController {
 
-    private EmployeeInterface employeeInterface;
-    private String firstName;
-    private String lastName;
+    private final EmployeeInterface service;
 
-    public EmployeeController(EmployeeServiceImpl employeeServiceImpl){
-        this.employeeInterface = employeeServiceImpl;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public EmployeeController(EmployeeInterface service) {
+        this.service = service;
+
+    }
+
+    @GetMapping(path = "/add")
+    public Employee employeeAdd(@RequestParam(required = true) String firstName,
+                                @RequestParam(required = true) String lastName) {
+        return service.add(firstName, lastName);
+    }
+
+    @GetMapping(path = "/remove")
+    public Employee employeeRemove(@RequestParam(required = true) String firstName,
+                                   @RequestParam(required = true) String lastName) {
+        return service.remove(firstName, lastName);
+    }
+
+    @GetMapping(path = "/find")
+    public Employee employeeFind(@RequestParam(required = true) String firstName,
+                                 @RequestParam(required = true) String lastName) {
+        return service.find(firstName, lastName);
     }
 
     @GetMapping
-    public String employee() {
-        return "employee";
+    public Collection<Employee> findAll() {
+        return service.findAll();
     }
-
-    @GetMapping(path = "/employee/add")
-    public String employeeAdd(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
-    }
-
-    @GetMapping(path = "/employee/remove")
-    public String employeeRemove(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
-    }
-
-    @GetMapping(path = "/employee/find")
-    public String employeeFind(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
-    }
-
 
 }

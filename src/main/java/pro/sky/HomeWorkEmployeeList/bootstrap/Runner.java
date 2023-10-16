@@ -12,15 +12,16 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<Employee> employeeList = List.of(
+        List<Employee> employeesList = List.of(
                 new Employee("Влад", "Волков"),
                 new Employee("Артем", "Верблюдов"),
                 new Employee("Людмила", "Иванова"),
                 new Employee("Игорь", "Криштоп"),
                 new Employee("Павел", "Носков"),
-                new Employee("Иван", "Могиш")
+                new Employee("Иван", "Могиш"),
+                new Employee("Роберт", "Блинов"),
+                new Employee("Сергей", "Арбузов"),
+                new Employee("Павел", "Аленчев")
         );
-
-
     }
 }
