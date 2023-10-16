@@ -4,40 +4,40 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.HomeWorkEmployeeList.Interface.EmployeeInterface;
+import pro.sky.HomeWorkEmployeeList.Model.Employee;
 import pro.sky.HomeWorkEmployeeList.ServiceImpl.EmployeeServiceImpl;
 
 @RestController
 public class EmployeeController {
 
-    private EmployeeInterface employeeInterface;
-    private String firstName;
-    private String lastName;
+    private final EmployeeInterface employeeInterface;
 
-    public EmployeeController(EmployeeServiceImpl employeeServiceImpl){
-        this.employeeInterface = employeeServiceImpl;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    public EmployeeController(EmployeeInterface employeeInterface){
+        this.employeeInterface = employeeInterface;
 
-    @GetMapping
-    public String employee() {
-        return "employee";
     }
 
     @GetMapping(path = "/employee/add")
-    public String employeeAdd(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
+    public String employeeAddName(@RequestParam(required = true) String firstName,
+                              @RequestParam(required = true) String lastName) {
+        return employeeInterface.employeeAdd(firstName, lastName);
     }
 
     @GetMapping(path = "/employee/remove")
-    public String employeeRemove(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
+    public String employeeRemoveName(@RequestParam(required = true) String firstName,
+                                 @RequestParam(required = true) String lastName) {
+        return employeeInterface.employeeRemove(firstName, lastName);
     }
 
     @GetMapping(path = "/employee/find")
-    public String employeeFind(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
-        return " " + firstName + " " + lastName;
+    public String employeeFindName(@RequestParam(required = true) String firstName,
+                               @RequestParam(required = true) String lastName) {
+        return employeeInterface.employeeFind(firstName, lastName);
     }
+
+
+
+
 
 
 }
