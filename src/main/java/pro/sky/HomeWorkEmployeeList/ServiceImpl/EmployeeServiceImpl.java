@@ -24,53 +24,41 @@ public class EmployeeServiceImpl implements EmployeeInterface {
     }
 
     @Override
-    public String add(String firstName, String lastName) {
+    public Employee add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
 
-        if(employeesList.size() > NUMBER_OF_EMPLOYEES) {
+        if (employeesList.size() > NUMBER_OF_EMPLOYEES) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников");
         }
 
-        if(employeesList.contains(employee)) {
-            throw new EmployeeNotFoundException("уже есть такой сотрудник");
+        if (employeesList.contains(employee)) {
+            throw new EmployeeAlreadyAddedException("уже есть такой сотрудник");
         }
         employeesList.add(employee);
-        return employeesList.toString();
+        return employee;
     }
 
     @Override
-    public String remove(String firstName, String lastName) {
+    public Employee remove(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if(employeesList.contains(employee)){
+        if (employeesList.contains(employee)) {
             employeesList.remove(employee);
+            return employee;
         }
-        return "Пользователь удален";
+        throw new EmployeeNotFoundException();
     }
 
     @Override
-    public String find(String firstName, String lastName) {
+    public Employee find(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        int items = 0;
-        for (int i = 0; i < employeesList.size(); i++) {
-            if (employeesList.get(i).equals(employee)) {
-                items = i;
-            } else {
-                throw new EmployeeNotFoundException("Пользователь не найден");
-            }
+        if (employeesList.contains(employee)) {
+            return employee;
         }
-        return employeesList.get(items).toString();
+        throw new EmployeeNotFoundException();
     }
 
-
     @Override
-    public Collection<Employee> findAll(){
+    public Collection<Employee> findAll() {
         return Collections.unmodifiableList(employeesList);
     }
-
-
-
-
-
-
-
 }

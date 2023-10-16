@@ -23,7 +23,5 @@ public class Runner implements CommandLineRunner {
                 new Employee("Сергей", "Арбузов"),
                 new Employee("Павел", "Аленчев")
         );
-
-
     }
 }

@@ -15,33 +15,32 @@ public class EmployeeController {
 
     private final EmployeeInterface service;
 
-    public EmployeeController(EmployeeInterface service){
+    public EmployeeController(EmployeeInterface service) {
         this.service = service;
 
     }
 
     @GetMapping(path = "/add")
-    public String employeeAdd(@RequestParam(required = true) String firstName,
-                              @RequestParam(required = true) String lastName) {
+    public Employee employeeAdd(@RequestParam(required = true) String firstName,
+                                @RequestParam(required = true) String lastName) {
         return service.add(firstName, lastName);
     }
 
     @GetMapping(path = "/remove")
-    public String employeeRemove(@RequestParam(required = true) String firstName,
-                                 @RequestParam(required = true) String lastName) {
+    public Employee employeeRemove(@RequestParam(required = true) String firstName,
+                                   @RequestParam(required = true) String lastName) {
         return service.remove(firstName, lastName);
     }
 
     @GetMapping(path = "/find")
-    public String employeeFind(@RequestParam(required = true) String firstName,
-                               @RequestParam(required = true) String lastName) {
+    public Employee employeeFind(@RequestParam(required = true) String firstName,
+                                 @RequestParam(required = true) String lastName) {
         return service.find(firstName, lastName);
     }
 
     @GetMapping
-    public Collection<Employee> findAll(){
+    public Collection<Employee> findAll() {
         return service.findAll();
     }
-
 
 }
